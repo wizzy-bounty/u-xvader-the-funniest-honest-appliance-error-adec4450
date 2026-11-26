@@ -1,12 +1,17 @@
 import os
-from pathlib import Path
 
-ENTRY_TEXT = "Compressor failed. I am now a tall cupboard with excellent lighting."
+LINE = "Fan failed. I am now an oven that lied on its resume."
 
-def main() -> None:
-    output_dir = Path(os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output")
-    output_dir.mkdir(parents=True, exist_ok=True)
-    (output_dir / "entry.txt").write_text(ENTRY_TEXT, encoding="utf-8")
+
+def entry_path():
+    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
+    os.makedirs(out_dir, exist_ok=True)
+    return os.path.join(out_dir, "entry.txt")
+
+
+def main():
+    with open(entry_path(), "wb") as f:
+        f.write(LINE.encode("utf-8"))
 
 
 if __name__ == "__main__":
